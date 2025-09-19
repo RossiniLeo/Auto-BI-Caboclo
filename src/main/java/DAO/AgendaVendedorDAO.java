@@ -25,7 +25,7 @@ public class AgendaVendedorDAO {
                 "LEFT JOIN PCREDECLIENTE RD ON (C.CODREDE = RD.CODREDE)";
 
         try (Connection conn = ConnectionFactory.obtemConexao();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -40,7 +40,7 @@ public class AgendaVendedorDAO {
                         rs.getString("RAMO"),
                         rs.getString("ENDERENT"),
                         rs.getString("NUMEROENT"),
-                        rs.getInt("CEPENT"),
+                        rs.getString("CEPENT"),
                         rs.getString("BAIRROENT"),
                         rs.getString("MUNICENT"),
                         rs.getString("ESTENT"),
@@ -48,8 +48,8 @@ public class AgendaVendedorDAO {
                         rs.getString("BLOQUEIO"),
                         rs.getString("FORMA_PG"),
                         rs.getInt("CODPLPAG"),
-                        rs.getString("DTBLOQ"),
-                        rs.getString("DTULTCOMP"),
+                        rs.getDate("DTBLOQ"),
+                        rs.getDate("DTULTCOMP"),
                         rs.getInt("CODRCA"),
                         rs.getString("VENDEDOR1"),
                         rs.getInt("CODSUPER1"),

@@ -4,9 +4,10 @@ import DAO.*;
 import java.sql.SQLException;
 
 public class main {
-    AgendaVendedorDAO agendaVendedorDAO = new AgendaVendedorDAO();
 
-    void main() throws SQLException {
+    public static void main(String[] args) throws SQLException {
+        AgendaVendedorDAO agendaVendedorDAO = new AgendaVendedorDAO();
+
         AgendaVendedorService.generateCSV(agendaVendedorDAO.listarAgendaVendedores());
     }
 }

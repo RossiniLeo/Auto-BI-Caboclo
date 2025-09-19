@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Date;
+
 public class AgendaVendedor {
 
     private int CodCliente;
@@ -12,7 +14,7 @@ public class AgendaVendedor {
     private String Ramo;
     private String EnderecoENT;
     private String Numero;
-    private int CEPENT;
+    private String CEPENT;
     private String BairroENT;
     private String MunicipioENT;
     private String EstadoENT;
@@ -20,8 +22,8 @@ public class AgendaVendedor {
     private String Bloqueio;
     private String FormaPG;
     private int CodPG;
-    private String DataBloqueio;
-    private String DataUltimaCompra;
+    private Date DataBloqueio;
+    private Date DataUltimaCompra;
     private int CodRCA;
     private String Vendedor;
     private int CodSupervisor;
@@ -30,7 +32,7 @@ public class AgendaVendedor {
     private int PeriodicidadeVisita;
     private int SequenciaVisita;
 
-    public AgendaVendedor(int codCliente, String cliente, String CGCENT, int codRede, String rede, int codPraca, int codATV1, String ramo, String enderecoENT, String numero, int CEPENT, String bairroENT, String municipioENT, String estadoENT, String telefoneENT, String bloqueio, String formaPG, int codPG, String dataBloqueio, String dataUltimaCompra, int codRCA, String vendedor, int codSupervisor, String dataProxVisita, String diaSemanaVisita, int periodicidadeVisita, int sequenciaVisita) {
+    public AgendaVendedor(int codCliente, String cliente, String CGCENT, int codRede, String rede, int codPraca, int codATV1, String ramo, String enderecoENT, String numero, String string, String bairroENT, String municipioENT, String estadoENT, String telefoneENT, String bloqueio, String formaPG, int codPG, Date dataBloqueio, Date dataUltimaCompra, int codRCA, String vendedor, int codSupervisor, String dataProxVisita, String diaSemanaVisita, int periodicidadeVisita, int sequenciaVisita) {
         CodCliente = codCliente;
         Cliente = cliente;
         this.CGCENT = CGCENT;
@@ -41,7 +43,7 @@ public class AgendaVendedor {
         Ramo = ramo;
         EnderecoENT = enderecoENT;
         Numero = numero;
-        this.CEPENT = CEPENT;
+        this.CEPENT = string;
         BairroENT = bairroENT;
         MunicipioENT = municipioENT;
         EstadoENT = estadoENT;
@@ -140,11 +142,11 @@ public class AgendaVendedor {
         Numero = numero;
     }
 
-    public int getCEPENT() {
+    public String getCEPENT() {
         return CEPENT;
     }
 
-    public void setCEPENT(int CEPENT) {
+    public void setCEPENT(String CEPENT) {
         this.CEPENT = CEPENT;
     }
 
@@ -204,19 +206,19 @@ public class AgendaVendedor {
         CodPG = codPG;
     }
 
-    public String getDataBloqueio() {
+    public Date getDataBloqueio() {
         return DataBloqueio;
     }
 
-    public void setDataBloqueio(String dataBloqueio) {
+    public void setDataBloqueio(Date dataBloqueio) {
         DataBloqueio = dataBloqueio;
     }
 
-    public String getDataUltimaCompra() {
+    public Date getDataUltimaCompra() {
         return DataUltimaCompra;
     }
 
-    public void setDataUltimaCompra(String dataUltimaCompra) {
+    public void setDataUltimaCompra(Date dataUltimaCompra) {
         DataUltimaCompra = dataUltimaCompra;
     }
 

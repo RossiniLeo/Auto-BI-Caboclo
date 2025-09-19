@@ -10,6 +10,14 @@ public class ConnectionFactory {
     private static final String USER = "";
     private static final String PASSWORD = "";
 
+    static {
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // Obtém conexão com o banco de dados
     public static Connection obtemConexao() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
