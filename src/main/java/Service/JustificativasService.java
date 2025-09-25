@@ -4,7 +4,6 @@ import Model.Justificativas;
 import DAO.JustificativasDAO;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -49,7 +48,7 @@ public class JustificativasService {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullPath))) {
             writer.write(csvContent.toString());
             System.out.println(csvContent);
-            System.out.println("Arquivo CSV exportado com sucesso para: " + "Justificativas.csv");
+            System.out.println("Arquivo CSV exportado com sucesso para: " + fullPath);
         } catch (IOException e) {
             System.err.println("Erro ao exportar CSV: " + e.getMessage());
         }

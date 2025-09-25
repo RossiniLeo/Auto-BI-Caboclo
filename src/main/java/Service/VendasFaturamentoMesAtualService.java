@@ -4,7 +4,7 @@ import DAO.VendasFaturamentoMesAtualDAO;
 import Model.VendasFaturamentoMesAtual;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.io.BufferedWriter;
@@ -15,6 +15,16 @@ public class VendasFaturamentoMesAtualService {
     private static VendasFaturamentoMesAtualDAO vendasFaturamentoMesAtualDAO = new VendasFaturamentoMesAtualDAO();
 
     private static final String CSV_HEADER = "DRMOV;NUMNOTA;CODOPER;STATUS;CODCLI;CLIENTE;CGCENT;CODUSUR;NOME;CODSUPERVISOR;CODPROD;DESCRICAO;CODFORNEC;CODFISCAL;QT;PUNIT;VENDATOT;CUSTOREAL;CUSTOTOT;DEPTO;";
+
+    private static final LocalDateTime now = LocalDateTime.now();
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final String timestamp = now.format(formatter);
+
+    private static final String directoryPath = "";
+    private static final String baseFileName = "VendasFaturamentoMesAtual_";
+    private static final String fileExtension = ".csv";
+    private static final String fileName = baseFileName + timestamp + fileExtension;
+    private static final String fullPath = directoryPath + fileName;
 
     public List<VendasFaturamentoMesAtual> ListarVendasFaturamentoMesAtual() throws SQLException{
         return vendasFaturamentoMesAtualDAO.listarVendasFaturamentoMesAtual();
@@ -48,10 +58,10 @@ public class VendasFaturamentoMesAtualService {
                     .append(vf.getDepto()).append(";\n");
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("rotas.csv"))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullPath))) {
             writer.write(csvContent.toString());
             System.out.println(csvContent);
-            System.out.println("Arquivo CSV exportado com sucesso para: " + "VendasFaturamentoMesAtual - " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".csv");
+            System.out.println("Arquivo CSV exportado com sucesso para: " + fullPath);
         } catch (IOException e) {
             System.err.println("Erro ao exportar CSV: " + e.getMessage());
         }

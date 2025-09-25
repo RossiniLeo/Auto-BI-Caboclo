@@ -4,7 +4,7 @@ import DAO.AgendaVendedorDAO;
 import Model.AgendaVendedor;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.io.BufferedWriter;
@@ -15,6 +15,16 @@ public class AgendaVendedorService {
     private static AgendaVendedorDAO  agendaVendedorDAO = new AgendaVendedorDAO();
 
     private static final String CSV_HEADER = "CODCLI;CLIENTE;CGCENT;CODREDE;REDE;CODPRACA;CODATV1;RAMO;ENDERENT;NUMEROENT;CEPENT;BAIRROENT;MUNICENT;ESTENT;TELENT;BLOQUEIO;FORGA_PG;CODPLPAG;DTBLOQ;DTULTCOMP;CODRCA;VENDEDOR1;CODSUPER1;VEND_VISITA;VEND_DIASEMANA;VEND_PERIO;VEND_SEQUENCIA;";
+
+    private static final LocalDateTime now = LocalDateTime.now();
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final String timestamp = now.format(formatter);
+
+    private static final String directoryPath = "";
+    private static final String baseFileName = "AgendaVendedor_";
+    private static final String fileExtension = ".csv";
+    private static final String fileName = baseFileName + timestamp + fileExtension;
+    private static final String fullPath = directoryPath + fileName;
 
     public List<AgendaVendedor> listarAgendaVendedores() throws SQLException {
         return agendaVendedorDAO.listarAgendaVendedores();
@@ -55,12 +65,10 @@ public class AgendaVendedorService {
                     .append(av.getSequenciaVisita()).append(";\n");
         }
 
-        String caminho = "AgendaVendedor - " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".csv";
-
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullPath))) {
             writer.write(csvContent.toString());
             System.out.println(csvContent);
-            System.out.println("Arquivo CSV exportado com sucesso para: " + "AgendaVendedor - " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".csv");
+            System.out.println("Arquivo CSV exportado com sucesso para: " + fullPath);
         } catch (IOException e) {
             System.err.println("Erro ao exportar CSV: " + e.getMessage());
         }
