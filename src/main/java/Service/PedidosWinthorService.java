@@ -36,7 +36,7 @@ public class PedidosWinthorService {
         csvContent.append("\n");
 
         for  (PedidosWinthor p : listaPedidosWinthor) {
-            csvContent.append(p.getNumPedido()).append(";")
+            csvContent.append(p.getNumPedido() != 0 ? p.getNumPedido() : "").append(";")
                     .append(p.getNumPedidoRCA()).append(";")
                     .append(p.getCodUsur()).append(";")
                     .append(p.getNome()).append(";")
@@ -45,13 +45,13 @@ public class PedidosWinthorService {
                     .append(p.getCliente()).append(";")
                     .append(p.getDTFechamentoPedPalm()).append(";")
                     .append(p.getDTInclusao()).append(";")
-                    .append(p.getDTEntrega()).append(";")
+                    .append(p.getDTEntrega() != null ? p.getDTEntrega() : "").append(";")
                     .append(p.getCodFilial()).append(";")
                     .append(p.getCodCob()).append(";")
                     .append(p.getCodPlPag()).append(";")
                     .append(p.getCondVenda()).append(";")
                     .append(p.getOrigemPed()).append(";")
-                    .append(p.getOBS1()).append(";")
+                    .append(p.getOBS1() != null ? p.getOBS1() : "").append(";")
                     .append(p.getObservacaoPC()).append(";")
                     .append(p.getPosicaoAtual()).append(";")
                     .append(p.getVlrPedido()).append(";\n");
