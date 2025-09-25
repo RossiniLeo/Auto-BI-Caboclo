@@ -54,10 +54,13 @@ public class AgendaVendedorService {
                     .append(av.getPeriodicidadeVisita()).append(";")
                     .append(av.getSequenciaVisita()).append(";\n");
         }
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("rotas.csv"))) {
+
+        String caminho = "AgendaVendedor - " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".csv";
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(caminho))) {
             writer.write(csvContent.toString());
             System.out.println(csvContent);
-            System.out.println("Arquivo CSV exportado com sucesso para: " + "AgendaVendedor" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".csv");
+            System.out.println("Arquivo CSV exportado com sucesso para: " + "AgendaVendedor - " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".csv");
         } catch (IOException e) {
             System.err.println("Erro ao exportar CSV: " + e.getMessage());
         }

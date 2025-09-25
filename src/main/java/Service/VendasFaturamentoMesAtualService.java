@@ -51,7 +51,7 @@ public class VendasFaturamentoMesAtualService {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("rotas.csv"))) {
             writer.write(csvContent.toString());
             System.out.println(csvContent);
-            System.out.println("Arquivo CSV exportado com sucesso para: " + "VendasFaturamentoMesAtual-" + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".csv");
+            System.out.println("Arquivo CSV exportado com sucesso para: " + "VendasFaturamentoMesAtual - " + LocalDate.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")) + ".csv");
         } catch (IOException e) {
             System.err.println("Erro ao exportar CSV: " + e.getMessage());
         }
