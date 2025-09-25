@@ -14,7 +14,7 @@ import java.io.IOException;
 public class JustificativasService {
     private static JustificativasDAO JustificativasDAO = new JustificativasDAO();
 
-    private static final String CSV_HEADER = "";
+    private static final String CSV_HEADER = "COD_VENDEDOR;NOME_VENDEDOR;COD_CLIENTE;NOME_CLIENTE;DATA;JUSTIFICATIVA;TIPO;";
 
     private static final LocalDateTime now = LocalDateTime.now();
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
