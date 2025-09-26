@@ -13,7 +13,7 @@ public class JustificativasDAO {
     public List<Justificativas> listarJustificativas() throws SQLException {
         List<Justificativas> listaJustificativas = new ArrayList<>();
         String sql = "SELECT CODUSUR COD_VENDEDOR,VENDEDOR NOME_VENDEDOR,CODCLI COD_CLIENTE,\n" +
-                "CLIENTE NOME_CLIENTE,END_DATE DATA,UPPER(LABEL) JUSTIFICATIVA,UPPER(NAME) TIPO\n" +
+                "CLIENTE NOME_CLIENTE,TO_DATE(END_DATE, 'dd-mon-yyyy hh24:mi:ss') DATA,UPPER(LABEL) JUSTIFICATIVA,UPPER(NAME) TIPO\n" +
                 "FROM WD_VW_POLIATIVIDADES\n" +
                 "WHERE UPPER(NAME) LIKE '%JUSTI%' AND to_date(END_DATE, 'dd-mon-yyyy hh24:mi:ss') >= TRUNC(sysdate, 'MON')";
 
@@ -23,13 +23,13 @@ public class JustificativasDAO {
 
             while (rs.next()) {
                 Justificativas justificativas = new Justificativas(
-                        rs.getInt("CODUSUR"),
-                        rs.getString("VENDEDOR"),
-                        rs.getInt("CODCLI"),
-                        rs.getString("CLIENTE"),
-                        rs.getDate("END_DATE"),
-                        rs.getString("UPPER(LABEL)"),
-                        rs.getString("UPPER(NAME)")
+                        rs.getInt("COD_VENDEDOR"),
+                        rs.getString("NOME_VENDEDOR"),
+                        rs.getInt("COD_CLIENTE"),
+                        rs.getString("NOME_CLIENTE"),
+                        rs.getDate("DATA"),
+                        rs.getString("JUSTIFICATIVA"),
+                        rs.getString("TIPO")
                 );
                 listaJustificativas.add(justificativas);
             }

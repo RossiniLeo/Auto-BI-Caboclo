@@ -6,10 +6,19 @@ import java.sql.SQLException;
 public class main {
 
     public static void main(String[] args) throws SQLException {
-        AgendaVendedorDAO agendaVendedorDAO = new AgendaVendedorDAO();
-        AgendaVendedorService.generateCSV(agendaVendedorDAO.listarAgendaVendedores());
+        //AgendaVendedorDAO agendaVendedorDAO = new AgendaVendedorDAO();
+        //AgendaVendedorService.generateCSV(agendaVendedorDAO.listarAgendaVendedores());
 
-        VendasFaturamentoMesAtualDAO vendasFaturamentoMesAtualDAO = new VendasFaturamentoMesAtualDAO();
-        VendasFaturamentoMesAtualService.generateCSV(vendasFaturamentoMesAtualDAO.listarVendasFaturamentoMesAtual());
+        //VendasFaturamentoMesAtualDAO vendasFaturamentoMesAtualDAO = new VendasFaturamentoMesAtualDAO();
+        //VendasFaturamentoMesAtualService.generateCSV(vendasFaturamentoMesAtualDAO.listarVendasFaturamentoMesAtual());
+
+        JustificativasDAO justificativasDAO = new JustificativasDAO();
+        JustificativasService.generateCSV(justificativasDAO.listarJustificativas());
+
+        //PedidosAFaturarDAO pedidosAFaturarDAO = new PedidosAFaturarDAO();
+        //PedidosAFaturarService.generateCSV(pedidosAFaturarDAO.listarPedidosAFaturar());
+
+        //PedidosWinthorDAO pedidosWinthorDAO = new PedidosWinthorDAO();
+        //PedidosWinthorService.generateCSV(pedidosWinthorDAO.listarPedidosWinthor());
     }
 }

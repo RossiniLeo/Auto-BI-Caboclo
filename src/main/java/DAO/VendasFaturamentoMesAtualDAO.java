@@ -10,8 +10,8 @@ public class VendasFaturamentoMesAtualDAO {
     public List<VendasFaturamentoMesAtual> listarVendasFaturamentoMesAtual() throws SQLException {
         List<VendasFaturamentoMesAtual> ListaVendasFaturamentoMesAtual = new ArrayList<>();
         String sql = "select\n" +
-                " :dtini as dtini         ,\n" +
-                " :dtfim as dtfim         ,\n" +
+                " :dtini         ,\n" +
+                " :dtfim         ,\n" +
                 " m.dtmov        ,\n" +
                 " m.numnota      ,\n" +
                 " m.codoper      ,\n" +
@@ -46,8 +46,8 @@ public class VendasFaturamentoMesAtualDAO {
                 "where\n" +
                 "     m.dtmov between :dtini and :dtfim  \n" +
                 " and m.status    =  'AB'\n" +
-                " and m.codoper in ( 'E' , 'EB' , 'ED' ,  --ENTRADA\n" +
-                "                    'S' , 'SB' , 'SD' )  --SAIDA\n" +
+                " and m.codoper in ( 'E' , 'EB' , 'ED' ,\n" +
+                "                    'S' , 'SB' , 'SD' )\n" +
                 " and m.codcli    = c.codcli\n" +
                 " and m.codusur   = u.codusur\n" +
                 " and p.codepto   = d.codepto\n" +
@@ -60,6 +60,8 @@ public class VendasFaturamentoMesAtualDAO {
 
             stmt.setDate(1, Date.valueOf(LocalDate.now().withDayOfMonth(1)));
             stmt.setDate(2, Date.valueOf(LocalDate.now()));
+            stmt.setDate(3, Date.valueOf(LocalDate.now().withDayOfMonth(1)));
+            stmt.setDate(4, Date.valueOf(LocalDate.now()));
 
             ResultSet rs = stmt.executeQuery();
 

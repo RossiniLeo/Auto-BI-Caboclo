@@ -17,7 +17,7 @@ public class PedidosWinthorDAO {
                 "       U.NOME,\n" +
                 "       C.CGCCLI,\n" +
                 "       C.CODCLI,\n" +
-                "       A.CLIENTE,\n" +
+                "       A.CLIENTE,       \n" +
                 "       C.DTFECHAMENTOPEDPALM,\n" +
                 "       C.DTINCLUSAO,\n" +
                 "       C.DTENTREGA,\n" +
@@ -42,9 +42,9 @@ public class PedidosWinthorDAO {
                 "         ' ', ''),'.', ''), ',', ''), '-', ''), '/', ''), '\\','')) = (trim(replace(replace(replace(replace(replace(replace(A.CGCENT, ' ', ''), '.', ''), ',', ''), '-', ''), '/', ''), '\\', '')))\n" +
                 "   AND C.CODUSUR = U.CODUSUR\n" +
                 "   AND C.IMPORTADO IN (2,3)\n" +
-                "   AND C.OBSERVACAO_PC NOT LIKE '%REMOVIDO PELA ROTINA 2596%')\n" +
-                "   AND TRUNC(C.DTINCLUSAO) BETWEEN :dtini and :dtfin\n" +
-                "  ORDER BY   DTINCLUSAO,CODUSUR, NUMPEDRCA\n";
+                "   AND C.OBSERVACAO_PC NOT LIKE '%REMOVIDO PELA ROTINA 2596%') --AND     C.NUMPED IN (1772246)\n" +
+                "   AND TRUNC(C.DTINCLUSAO) BETWEEN :dtini and :dtfin" +
+                "  ORDER BY   DTINCLUSAO,CODUSUR, NUMPEDRCA";
 
         sql = sql.replace(":dtini", "?").replace(":dtfin", "?");
 
@@ -58,7 +58,7 @@ public class PedidosWinthorDAO {
 
             while (rs.next()) {
                 PedidosWinthor pedidosWinthor = new PedidosWinthor(
-                        rs.getInt("NUMPED"),
+                        rs.getLong("NUMPED"),
                         rs.getInt("NUMPEDRCA"),
                         rs.getInt("CODUSUR"),
                         rs.getString("NOME"),

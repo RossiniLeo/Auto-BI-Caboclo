@@ -3,7 +3,7 @@ package Model;
 import java.util.Date;
 
 public class PedidosWinthor {
-    private int numPedido;
+    private long numPedido;
     private int numPedidoRCA;
     private int CodUsur;
     private String Nome;
@@ -23,7 +23,7 @@ public class PedidosWinthor {
     private String PosicaoAtual;
     private double VlrPedido;
 
-    public PedidosWinthor(int numPedido, int numPedidoRCA, int codUsur, String nome, String CGCCli, int codCli, String cliente, Date DTFechamentoPedPalm, Date DTInclusao, Date DTEntrega, int codFilial, String codCob, int codPlPag, int condVenda, String origemPed, String OBS1, String observacaoPC, String posicaoAtual, double vlrPedido) {
+    public PedidosWinthor(long numPedido, int numPedidoRCA, int codUsur, String nome, String CGCCli, int codCli, String cliente, Date DTFechamentoPedPalm, Date DTInclusao, Date DTEntrega, int codFilial, String codCob, int codPlPag, int condVenda, String origemPed, String OBS1, String observacaoPC, String posicaoAtual, double vlrPedido) {
         this.numPedido = numPedido;
         this.numPedidoRCA = numPedidoRCA;
         CodUsur = codUsur;
@@ -45,11 +45,11 @@ public class PedidosWinthor {
         VlrPedido = vlrPedido;
     }
 
-    public int getNumPedido() {
+    public long getNumPedido() {
         return numPedido;
     }
 
-    public void setNumPedido(int numPedido) {
+    public void setNumPedido(long numPedido) {
         this.numPedido = numPedido;
     }
 

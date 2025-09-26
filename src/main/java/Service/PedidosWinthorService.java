@@ -10,17 +10,18 @@ import java.util.List;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class PedidosWinthorService {
     private static PedidosWinthorDAO pedidosWinthorDAO = new PedidosWinthorDAO();
 
-    private static final String CSV_HEADER = "NUMPED;NUMPEDRCA;CODUSUR;NOME;CGCCLI;CODCLI;CLIENTE;DTFECHAMENTOPEDRCA;DTINCLUSAO;DTENTREGA;CODFILIAL;CODCOB;CODPLPAG;CONDVENDA;ORIGEMPED;OBS1;OBSERVACAO_PC;POSICAO_ATUAL;VLR_PEDIDO;";
+    private static final String CSV_HEADER = "NUMPED;NUMPEDRCA;CODUSUR;NOME;CGCCLI;CODCLI;CLIENTE;DTFECHAMENTOPEDRCA;DTINCLUSAO;DTENTREGA;CODFILIAL;CODCOB;CODPLPAG;CONDVENDA;ORIGEMPED;OBS1;POSICAO_ATUAL;VLR_PEDIDO;";
 
     private static final LocalDateTime now = LocalDateTime.now();
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final String timestamp = now.format(formatter);
 
-    private static final String directoryPath = "";
+    private static final String directoryPath = "C:\\Users\\aplicacoes\\Downloads\\Auto-BI-Caboclo-main\\CSV\\";
     private static final String baseFileName = "PedidosWinthor_";
     private static final String fileExtension = ".csv";
     private static final String fileName = baseFileName + timestamp + fileExtension;
@@ -52,12 +53,11 @@ public class PedidosWinthorService {
                     .append(p.getCondVenda()).append(";")
                     .append(p.getOrigemPed()).append(";")
                     .append(p.getOBS1() != null ? p.getOBS1() : "").append(";")
-                    .append(p.getObservacaoPC()).append(";")
                     .append(p.getPosicaoAtual()).append(";")
                     .append(p.getVlrPedido()).append(";\n");
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullPath))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("PedidosWinthor.csv"))) {
             writer.write(csvContent.toString());
             System.out.println(csvContent);
             System.out.println("Arquivo CSV exportado com sucesso para: " + fullPath);

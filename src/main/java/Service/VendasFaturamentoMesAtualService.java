@@ -20,7 +20,7 @@ public class VendasFaturamentoMesAtualService {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private static final String timestamp = now.format(formatter);
 
-    private static final String directoryPath = "";
+    private static final String directoryPath = "C:\\Users\\aplicacoes\\Downloads\\Auto-BI-Caboclo-main\\CSV\\";
     private static final String baseFileName = "VendasFaturamentoMesAtual_";
     private static final String fileExtension = ".csv";
     private static final String fileName = baseFileName + timestamp + fileExtension;
@@ -58,7 +58,7 @@ public class VendasFaturamentoMesAtualService {
                     .append(vf.getDepto()).append(";\n");
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fullPath))) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("VendasFaturamentoMesAtual.csv"))) {
             writer.write(csvContent.toString());
             System.out.println(csvContent);
             System.out.println("Arquivo CSV exportado com sucesso para: " + fullPath);
