@@ -1,3 +1,4 @@
+import Model.Cliente;
 import Service.*;
 import DAO.*;
 
@@ -20,5 +21,11 @@ public class main {
 
         //PedidosWinthorDAO pedidosWinthorDAO = new PedidosWinthorDAO();
         //PedidosWinthorService.generateCSV(pedidosWinthorDAO.listarPedidosWinthor());
+
+        ClienteDAO clienteDAO = new ClienteDAO();
+        ClienteService.generarCSV(clienteDAO.ListarCliente());
+
+        ProdutoDAO produtoDAO = new ProdutoDAO();
+        ProdutoService.generateCSV(produtoDAO.listarProdutos());
     }
 }
