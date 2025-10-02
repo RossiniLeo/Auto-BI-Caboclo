@@ -14,7 +14,7 @@ import java.io.IOException;
 public class ProdutoService {
     private static ProdutoDAO  produtoDAO = new ProdutoDAO();
 
-    private static final String CSV_HEADER = "";
+    private static final String CSV_HEADER = "CODPROD;DESCRICAO;CODFORNEC;FORNECEDOR;CODEPTO;DESCRICAODPTO;CODSEC;DESCRICAOSEC;CODMARCA;MARCA;CODCATEGORIA;CATEGORIA;EMBALAGEM;PESOLIQ;PESOBRUTO;NBM;CODAUXILIAR;CODAUXILIAR2;CODFAB;OBS2;DTEXCLUSAO;DTULTALTER;DTCADASTRO;";
 
     private static final LocalDateTime now = LocalDateTime.now();
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -52,9 +52,9 @@ public class ProdutoService {
                     .append(produto.getPesoLiq()).append(";")
                     .append(produto.getPesoBruto()).append(";")
                     .append(produto.getNBM()).append(";")
-                    .append(produto.getCodAuxiliar() != 0 ? produto.getCodAuxiliar() : "").append(";")
-                    .append(produto.getCodAuxiliar2() != 0 ? produto.getCodAuxiliar2() : "").append(";")
-                    .append(produto.getCodFab() != 0 ? produto.getCodFab() : "").append(";")
+                    .append(produto.getCodAuxiliar().equals(0) ? "" : produto.getCodAuxiliar()).append(";")
+                    .append(produto.getCodAuxiliar2().equals(0) ? "" : produto.getCodAuxiliar2()).append(";")
+                    .append(produto.getCodFab() != null ? produto.getCodFab() : "").append(";")
                     .append(produto.getOBS2() != null ? produto.getOBS2() : "").append(";")
                     .append(produto.getDataExclusao() != null ? produto.getDataExclusao() : "").append(";")
                     .append(produto.getDataUltAlter()).append(";")

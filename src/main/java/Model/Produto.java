@@ -1,5 +1,6 @@
 package Model;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 public class Produto {
@@ -19,9 +20,9 @@ public class Produto {
     private double PesoLiq;
     private double PesoBruto;
     private int NBM;
-    private int CodAuxiliar;
-    private int CodAuxiliar2;
-    private int CodFab;
+    private BigInteger CodAuxiliar;
+    private BigInteger CodAuxiliar2;
+    private String CodFab;
     private String OBS2;
     private Date DataExclusao;
     private Date DataUltAlter;
@@ -155,27 +156,27 @@ public class Produto {
         this.NBM = NBM;
     }
 
-    public int getCodAuxiliar() {
+    public BigInteger getCodAuxiliar() {
         return CodAuxiliar;
     }
 
-    public void setCodAuxiliar(int codAuxiliar) {
+    public void setCodAuxiliar(BigInteger codAuxiliar) {
         CodAuxiliar = codAuxiliar;
     }
 
-    public int getCodAuxiliar2() {
+    public BigInteger getCodAuxiliar2() {
         return CodAuxiliar2;
     }
 
-    public void setCodAuxiliar2(int codAuxiliar2) {
+    public void setCodAuxiliar2(BigInteger codAuxiliar2) {
         CodAuxiliar2 = codAuxiliar2;
     }
 
-    public int getCodFab() {
+    public String getCodFab() {
         return CodFab;
     }
 
-    public void setCodFab(int codFab) {
+    public void setCodFab(String codFab) {
         CodFab = codFab;
     }
 
@@ -211,7 +212,7 @@ public class Produto {
         DataCadastro = dataCadastro;
     }
 
-    public Produto(int codProduto, String descricao, int codFornecedor, String fornecedor, int coDepto, String descricao_1, int codSec, String descricao_2, int codMarca, String marca, int codCategoria, String categoria, String embalagem, double pesoLiq, double pesoBruto, int NBM, int codAuxiliar, int codAuxiliar2, int codFab, String OBS2, Date dataExclusao, Date dataUltAlter, Date dataCadastro) {
+    public Produto(int codProduto, String descricao, int codFornecedor, String fornecedor, int coDepto, String descricao_1, int codSec, String descricao_2, int codMarca, String marca, int codCategoria, String categoria, String embalagem, double pesoLiq, double pesoBruto, int NBM, BigInteger codAuxiliar, BigInteger codAuxiliar2, String codFab, String OBS2, Date dataExclusao, Date dataUltAlter, Date dataCadastro) {
         CodProduto = codProduto;
         Descricao = descricao;
         CodFornecedor = codFornecedor;

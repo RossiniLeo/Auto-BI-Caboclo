@@ -1,6 +1,8 @@
 package DAO;
 
 import Model.Produto;
+
+import java.math.BigInteger;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,29 +11,29 @@ public class ProdutoDAO {
     public List<Produto> listarProdutos() throws SQLException {
         List<Produto> produtos = new ArrayList<>();
         String sql = "SELECT \n" +
-                "PCPRODUT.CODPROD\n" +
-                ",PCPRODUT.DESCRICAO\n" +
-                ",PCPRODUT.CODFORNEC\n" +
-                ",PCFORNEC.FORNECEDOR\n" +
-                ",PCPRODUT.CODEPTO\n" +
-                ",PCDEPTO.DESCRICAO\n" +
-                ",PCPRODUT.CODSEC\n" +
-                ",PCSECAO.DESCRICAO\n" +
-                ",PCPRODUT.CODMARCA\n" +
-                ",PCMARCA.MARCA\n" +
-                ",PCPRODUT.CODCATEGORIA\n" +
-                ",PCCATEGORIA.CATEGORIA\n" +
-                ",PCPRODUT.EMBALAGEM\n" +
-                ",PCPRODUT.PESOLIQ\n" +
-                ",PCPRODUT.PESOBRUTO\n" +
-                ",PCPRODUT.NBM\n" +
-                ",PCPRODUT.CODAUXILIAR\n" +
-                ",PCPRODUT.CODAUXILIAR2\n" +
-                ",PCPRODUT.CODFAB\n" +
-                ",PCPRODUT.OBS2\n" +
-                ",PCPRODUT.DTEXCLUSAO\n" +
-                ",PCPRODUT.DTULTALTER\n" +
-                ",PCPRODUT.DTCADASTRO\n" +
+                "PCPRODUT.CODPROD AS CODPROD\n" +
+                ",PCPRODUT.DESCRICAO AS DESCRICAO\n" +
+                ",PCPRODUT.CODFORNEC AS CODFORNEC\n" +
+                ",PCFORNEC.FORNECEDOR AS FORNECEDOR\n" +
+                ",PCPRODUT.CODEPTO AS CODEPTO\n" +
+                ",PCDEPTO.DESCRICAO AS DESCRICAO_1\n" +
+                ",PCPRODUT.CODSEC AS CODSEC\n" +
+                ",PCSECAO.DESCRICAO AS DESCRICAO_2\n" +
+                ",PCPRODUT.CODMARCA AS CODMARCA\n" +
+                ",PCMARCA.MARCA AS MARCA\n" +
+                ",PCPRODUT.CODCATEGORIA AS CODCATEGORIA\n" +
+                ",PCCATEGORIA.CATEGORIA AS CATEGORIA\n" +
+                ",PCPRODUT.EMBALAGEM AS EMBALAGEM\n" +
+                ",PCPRODUT.PESOLIQ AS PESOLIQ\n" +
+                ",PCPRODUT.PESOBRUTO AS PESOBRUTO\n" +
+                ",PCPRODUT.NBM AS NBM\n" +
+                ",PCPRODUT.CODAUXILIAR AS CODAUXILIAR\n" +
+                ",PCPRODUT.CODAUXILIAR2 AS CODAUXILIAR2\n" +
+                ",PCPRODUT.CODFAB AS CODFAB\n" +
+                ",PCPRODUT.OBS2 AS OBS2\n" +
+                ",PCPRODUT.DTEXCLUSAO AS DTEXCLUSAO\n" +
+                ",PCPRODUT.DTULTALTER AS DTULTALTER\n" +
+                ",PCPRODUT.DTCADASTRO AS DTCADASTRO\n" +
                 "FROM\n" +
                 "PCPRODUT\n" +
                 "INNER JOIN PCFORNEC   ON (PCPRODUT.CODFORNEC = PCFORNEC.CODFORNEC)\n" +
@@ -48,30 +50,31 @@ public class ProdutoDAO {
 
             while (rs.next()) {
                 Produto produto = new Produto(
-                        rs.getInt("PCPRODUT.CODPROD"),
-                        rs.getString("PCPRODUT.DESCRICAO"),
-                        rs.getInt("PCPRODUT.CODFORNEC"),
-                        rs.getString("PCPRODUT.FONECEDOR"),
-                        rs.getInt("PCPRODUT.CODEPTO"),
-                        rs.getString("PCPRODUT.DESCRICAO"),
-                        rs.getInt("PCPRODUT.CODSEC"),
-                        rs.getString("PCPRODUT.DESCRICAO"),
-                        rs.getInt("PCPRODUT.CODMARCA"),
-                        rs.getString("PCPRODUT.MARCA"),
-                        rs.getInt("PCPRODUT.CODCATEGORIA"),
-                        rs.getString("PCPRODUT.CATEGORIA"),
-                        rs.getString("PCPRODUT.EMBALAGEM"),
-                        rs.getDouble("PCPRODUT.PESOLIQ"),
-                        rs.getDouble("PCPRODUT.PESOBRUTO"),
-                        rs.getInt("PCPRODUT.NBM"),
-                        rs.getInt("PCPRODUT.CODAUXILIAR"),
-                        rs.getInt("PCPRODUT.CODAUXLIAR2"),
-                        rs.getInt("PCPRODUT.CODFAB"),
-                        rs.getString("PCPRODUT.OBS2"),
-                        rs.getDate("PCPRODUT.DTEXCLUSAO"),
-                        rs.getDate("PCPRODUT.DTULTALTER"),
-                        rs.getDate("PCPRODUT.DTCADASTRO")
+                        rs.getInt("CODPROD"),
+                        rs.getString("DESCRICAO"),
+                        rs.getInt("CODFORNEC"),
+                        rs.getString("FORNECEDOR"),
+                        rs.getInt("CODEPTO"),
+                        rs.getString("DESCRICAO_1"),
+                        rs.getInt("CODSEC"),
+                        rs.getString("DESCRICAO_2"),
+                        rs.getInt("CODMARCA"),
+                        rs.getString("MARCA"),
+                        rs.getInt("CODCATEGORIA"),
+                        rs.getString("CATEGORIA"),
+                        rs.getString("EMBALAGEM"),
+                        rs.getDouble("PESOLIQ"),
+                        rs.getDouble("PESOBRUTO"),
+                        rs.getInt("NBM"),
+                        rs.getBigDecimal("CODAUXILIAR") != null ? rs.getBigDecimal("CODAUXILIAR").toBigInteger() : BigInteger.valueOf(0),
+                        rs.getBigDecimal("CODAUXILIAR2") != null ? rs.getBigDecimal("CODAUXILIAR2").toBigInteger() : BigInteger.valueOf(0),
+                        rs.getString("CODFAB"),
+                        rs.getString("OBS2"),
+                        rs.getDate("DTEXCLUSAO"),
+                        rs.getDate("DTULTALTER"),
+                        rs.getDate("DTCADASTRO")
                 );
+                produtos.add(produto);
             }
         }
         return produtos;

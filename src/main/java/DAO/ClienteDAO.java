@@ -9,39 +9,39 @@ public class ClienteDAO {
     public List<Cliente> ListarCliente() throws SQLException {
         List<Cliente> clientes = new ArrayList<>();
         String sql = "SELECT\n" +
-                "PCCLIENT.CGCENT                            \n" +
-                ",PCCLIENT.TIPOFJ                           \n" +
-                ",PCCLIENT.CLIENTE                          \n" +
-                ",PCCLIENT.CODREDE                          \n" +
-                ",PCREDECLIENTE.DESCRICAO\n" +
-                ",PCCLIENT.FANTASIA\n" +
-                ",PCCLIENT.CODCLI\n" +
-                ",PCCLIENT.DTULTALTER\n" +
-                ",PCCLIENT.IEENT\n" +
-                ",PCCLIENT.DTCADASTRO\n" +
-                ",PCCLIENT.CODATV1                          \n" +
-                ",PCATIVI.RAMO                              \n" +
-                ",PCCLIENT.DTULTCOMP\n" +
-                ",PCCLIENT.ESTENT\n" +
-                ",PCCLIENT.CODFILIALNF\n" +
-                ",PCCLIENT.TELCELENT\n" +
-                ",PCCLIENT.PREDIOPROPRIO\n" +
-                ",PCCLIENT.CODCIDADE\n" +
-                ",PCCLIENT.CODPRACA\n" +
-                ",PCPRACA.PRACA\n" +
-                ",PCCLIENT.EMAIL\n" +
-                ",PCCLIENT.ENDERENT\n" +
-                ",PCCLIENT.NUMEROENT\n" +
-                ",PCCLIENT.BAIRROENT\n" +
-                ",PCCLIENT.MUNICENT\n" +
-                ",PCCLIENT.CEPENT\n" +
-                ",PCCLIENT.OBSERVACAO\n" +
-                ",PCCLIENT.BLOQUEIO\n" +
-                ",PCCLIENT.DTBLOQ\n" +
-                ",PCCLIENT.CODUSUR1\n" +
-                ",PCCLIENT.CODUSUR2\n" +
-                ",PCCLIENT.MOTIVOEXCLUSAO\n" +
-                ",PCCLIENT.MOTIVOBLOQ\n" +
+                "PCCLIENT.CGCENT AS CGCENT                            \n" +
+                ",PCCLIENT.TIPOFJ AS TIPOFJ                           \n" +
+                ",PCCLIENT.CLIENTE AS CLIENTE                          \n" +
+                ",PCCLIENT.CODREDE AS CODREDE                          \n" +
+                ",PCREDECLIENTE.DESCRICAO AS DESCRICAO\n" +
+                ",PCCLIENT.FANTASIA AS FANTASIA\n" +
+                ",PCCLIENT.CODCLI AS CODCLI\n" +
+                ",PCCLIENT.DTULTALTER AS DTULTALTER\n" +
+                ",PCCLIENT.IEENT AS IEENT\n" +
+                ",PCCLIENT.DTCADASTRO AS DTCADASTRO\n" +
+                ",PCCLIENT.CODATV1 AS CODATV1                          \n" +
+                ",PCATIVI.RAMO AS RAMO                              \n" +
+                ",PCCLIENT.DTULTCOMP AS DTULTCOMP\n" +
+                ",PCCLIENT.ESTENT AS ESTENT\n" +
+                ",PCCLIENT.CODFILIALNF CODFILIALNF\n" +
+                ",PCCLIENT.TELCELENT AS TELCELENT\n" +
+                ",PCCLIENT.PREDIOPROPRIO AS PREDIOPROPRIO\n" +
+                ",PCCLIENT.CODCIDADE AS CODCIDADE\n" +
+                ",PCCLIENT.CODPRACA AS CODPRACA\n" +
+                ",PCPRACA.PRACA AS PRACA\n" +
+                ",PCCLIENT.EMAIL AS EMAIL\n" +
+                ",PCCLIENT.ENDERENT AS ENDERENT\n" +
+                ",PCCLIENT.NUMEROENT AS NUMEROENT\n" +
+                ",PCCLIENT.BAIRROENT AS BAIRROENT\n" +
+                ",PCCLIENT.MUNICENT AS MUNICENT\n" +
+                ",PCCLIENT.CEPENT AS CEPENT\n" +
+                ",PCCLIENT.OBSERVACAO AS OBSERVACAO\n" +
+                ",PCCLIENT.BLOQUEIO AS BLOQUEIO\n" +
+                ",PCCLIENT.DTBLOQ AS DTBLOQ\n" +
+                ",PCCLIENT.CODUSUR1 AS CODUSUR1\n" +
+                ",PCCLIENT.CODUSUR2 AS CODUSUR2\n" +
+                ",PCCLIENT.MOTIVOEXCLUSAO AS MOTIVOEXCLUSAO\n" +
+                ",PCCLIENT.MOTIVOBLOQ AS MOTIVOBLOQ\n" +
                 "FROM PCCLIENT\n" +
                 "INNER JOIN PCATIVI ON (PCCLIENT.CODATV1 = PCATIVI.CODATIV )\n" +
                 "LEFT JOIN PCREDECLIENTE ON (PCCLIENT.CODREDE = PCREDECLIENTE.CODREDE)\n" +
@@ -53,39 +53,39 @@ public class ClienteDAO {
 
             while (rs.next()) {
                 Cliente cliente = new Cliente(
-                        rs.getString("PCCLIENT.CGCENT"),
-                        rs.getInt("PCCLIENT.TIPOFJ"),
-                        rs.getString("PCCLIENT.CLIENTE"),
-                        rs.getInt("PCCLIENT.CODREDE"),
-                        rs.getString("PCCLIENT.DESCICAO"),
-                        rs.getString("PCCLIENT.FANTASIA"),
-                        rs.getInt("PCCLIENT.CODCLI"),
-                        rs.getDate("PCCLIENT.DTULTALTER"),
-                        rs.getString("PCCLIENT.IEENT"),
-                        rs.getDate("PCCLIENT.DTCADASTRO"),
-                        rs.getInt("PCCLIENT.CODATV1"),
-                        rs.getString("PCCLIENT.RAMO"),
-                        rs.getDate("PCCLIENT.DTULTCOMP"),
-                        rs.getString("PCCLIENT.ESTENT"),
-                        rs.getInt("PCCLIENT.CODFILIALNF"),
-                        rs.getString("PCCLIENT.TELCELENT"),
-                        rs.getString("PCCLIENT.PREDIOPROPRIO"),
-                        rs.getInt("PCCLIENT.CODCIDADE"),
-                        rs.getInt("PCCLIENT.CODPRACA"),
-                        rs.getString("PCCLIENT.PRACA"),
-                        rs.getString("PCCLIENT.EMAIL"),
-                        rs.getString("PCCLIENT.ENDERENT"),
-                        rs.getInt("PCCLIENT.NUMEROENT"),
-                        rs.getString("PCCLIENT.BAIRROENT"),
-                        rs.getString("PCCLIENT.MUNICENT"),
-                        rs.getString("PCCLIENT.CEPENT"),
-                        rs.getString("PCCLIENT.OBSERVACAO"),
-                        rs.getString("PCCLIENT.BLOQUEIO"),
-                        rs.getDate("PCCLIENT.DTBOQ"),
-                        rs.getInt("PCCLIENT.CODUSUR1"),
-                        rs.getInt("PCCLIENT.CODUSUR2"),
-                        rs.getString("PCCLIENT.MOTIVOEXCLUSAO"),
-                        rs.getString("PCCLIENT.MOTIVOBLOQ")
+                        rs.getString("CGCENT"),
+                        rs.getString("TIPOFJ"),
+                        rs.getString("CLIENTE"),
+                        rs.getInt("CODREDE"),
+                        rs.getString("DESCRICAO"),
+                        rs.getString("FANTASIA"),
+                        rs.getInt("CODCLI"),
+                        rs.getDate("DTULTALTER"),
+                        rs.getString("IEENT"),
+                        rs.getDate("DTCADASTRO"),
+                        rs.getInt("CODATV1"),
+                        rs.getString("RAMO"),
+                        rs.getDate("DTULTCOMP"),
+                        rs.getString("ESTENT"),
+                        rs.getInt("CODFILIALNF"),
+                        rs.getString("TELCELENT"),
+                        rs.getString("PREDIOPROPRIO"),
+                        rs.getInt("CODCIDADE"),
+                        rs.getInt("CODPRACA"),
+                        rs.getString("PRACA"),
+                        rs.getString("EMAIL"),
+                        rs.getString("ENDERENT"),
+                        rs.getString("NUMEROENT"),
+                        rs.getString("BAIRROENT"),
+                        rs.getString("MUNICENT"),
+                        rs.getString("CEPENT"),
+                        rs.getString("OBSERVACAO"),
+                        rs.getString("BLOQUEIO"),
+                        rs.getDate("DTBLOQ"),
+                        rs.getInt("CODUSUR1"),
+                        rs.getInt("CODUSUR2"),
+                        rs.getString("MOTIVOEXCLUSAO"),
+                        rs.getString("MOTIVOBLOQ")
                 );
                 clientes.add(cliente);
             }

@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Cliente {
     private String CGCENT;
-    private int TipoFJ;
+    private String TipoFJ;
     private String Cliente;
     private int CodRede;
     private String Descricao;
@@ -25,7 +25,7 @@ public class Cliente {
     private String Praca;
     private String Email;
     private String EnderENT;
-    private int NumeroENT;
+    private String NumeroENT;
     private String BairroENT;
     private String MunicENT;
     private String CEPENT;
@@ -37,7 +37,7 @@ public class Cliente {
     private String MotivoExclusao;
     private String MotivoBloq;
 
-    public Cliente(String CGCENT, int tipoFJ, String cliente, int codRede, String descricao, String fantasia, int codCliente, Date dataUltAlter, String IEENT, Date dataCadastro, int codAtv1, String ramo, Date dataUltComp, String estENT, int codFilialNF, String telCelENT, String predioProprio, int codCidade, int codPraca, String praca, String email, String enderENT, int numeroENT, String bairroENT, String municENT, String CEPENT, String observacao, String bloqueio, Date dataBloq, int codUsur1, int codUsur2, String motivoExclusao, String motivoBloq) {
+    public Cliente(String CGCENT, String tipoFJ, String cliente, int codRede, String descricao, String fantasia, int codCliente, Date dataUltAlter, String IEENT, Date dataCadastro, int codAtv1, String ramo, Date dataUltComp, String estENT, int codFilialNF, String telCelENT, String predioProprio, int codCidade, int codPraca, String praca, String email, String enderENT, String numeroENT, String bairroENT, String municENT, String CEPENT, String observacao, String bloqueio, Date dataBloq, int codUsur1, int codUsur2, String motivoExclusao, String motivoBloq) {
         this.CGCENT = CGCENT;
         TipoFJ = tipoFJ;
         Cliente = cliente;
@@ -81,11 +81,11 @@ public class Cliente {
         this.CGCENT = CGCENT;
     }
 
-    public int getTipoFJ() {
+    public String getTipoFJ() {
         return TipoFJ;
     }
 
-    public void setTipoFJ(int tipoFJ) {
+    public void setTipoFJ(String tipoFJ) {
         TipoFJ = tipoFJ;
     }
 
@@ -249,11 +249,11 @@ public class Cliente {
         EnderENT = enderENT;
     }
 
-    public int getNumeroENT() {
+    public String getNumeroENT() {
         return NumeroENT;
     }
 
-    public void setNumeroENT(int numeroENT) {
+    public void setNumeroENT(String numeroENT) {
         NumeroENT = numeroENT;
     }
 

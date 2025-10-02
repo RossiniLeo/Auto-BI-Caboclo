@@ -3,18 +3,19 @@ package Service;
 import DAO.ClienteDAO;
 import Model.Cliente;
 
+import java.io.*;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class ClienteService {
     private static ClienteDAO clienteDao = new ClienteDAO();
 
-    private static final String CSV_HEADER = "CGCENT;TIPOFJ;CLIENTE;CODREDE;DESCRICAO;FANTASIA;CODCLI;DTULTALTER;IEENT;DTCADASTRO;CODATV1;RAMO;DTULTCOMP;ESTENT;CODFILIALNF;TELCELENT;PREDIOPROPRIO;CODCIDADE;CODPRACA;PRACA;EMAIL;ENDRENT;NUMEROENT;MINICENT;CEPENT;OBSERVACAO;BLOQUEIO;DTBLOQ;CODUSUR1;CODUSUR2;MOTIVOEXCLUSAO;MOTIVOBLOQ";
+    private static final String CSV_HEADER = "CGCENT;TIPOFJ;CLIENTE;CODREDE;DESCRICAO;FANTASIA;CODCLI;DTULTALTER;IEENT;DTCADASTRO;CODATV1;RAMO;DTULTCOMP;ESTENT;CODFILIALNF;TELCELENT;PREDIOPROPRIO;CODCIDADE;CODPRACA;PRACA;EMAIL;ENDRENT;NUMEROENT;BAIRROENT;MUNICENT;CEPENT;OBSERVACAO;BLOQUEIO;DTBLOQ;CODUSUR1;CODUSUR2;MOTIVOEXCLUSAO;MOTIVOBLOQ;";
 
     private static final LocalDateTime now = LocalDateTime.now();
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -62,17 +63,27 @@ public class ClienteService {
                     .append(cliente.getBairroENT()).append(";")
                     .append(cliente.getMunicENT() != null ? cliente.getMunicENT() : "").append(";")
                     .append(cliente.getCEPENT()).append(";")
-                    .append(cliente.getObservacao() != null ? cliente.getObservacao() : "").append(";")
+                    .append(cliente.getObservacao() != null ? cliente.getObservacao().replaceAll("[\\r\\n]+", " ") : "").append(";")
                     .append(cliente.getBloqueio() != null ? cliente.getBloqueio() : "").append(";")
                     .append(cliente.getDataBloq() != null ? cliente.getDataBloq() : "").append(";")
                     .append(cliente.getCodUsur1() != 0 ? cliente.getCodUsur1() : "").append(";")
                     .append(cliente.getCodUsur2() != 0 ? cliente.getCodUsur2() : "").append(";")
-                    .append(cliente.getMotivoExclusao() != null ? cliente.getMotivoExclusao() : "").append(";")
-                    .append(cliente.getMotivoBloq() != null ? cliente.getMotivoBloq() : "").append(";\n");
+                    .append(cliente.getMotivoExclusao() != null ? cliente.getMotivoExclusao().replaceAll("[\\r\\n]+", " ") : "").append(";")
+                    .append(cliente.getMotivoBloq() != null ? cliente.getMotivoBloq().replaceAll("[\\r\\n]+", " ") : "").append(";\n");
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("./Clientes.csv"))) {
+        try (FileOutputStream fos = new FileOutputStream("./Clientes.csv");
+             OutputStreamWriter osw = new OutputStreamWriter(fos, StandardCharsets.UTF_8);
+             BufferedWriter writer = new BufferedWriter(osw)) {
+
+            // Escreve BOM manualmente
+            fos.write(0xEF);
+            fos.write(0xBB);
+            fos.write(0xBF);
+
+            // Conteúdo do CSV
             writer.write(csvContent.toString());
+
             System.out.println(csvContent);
             System.out.println("Arquivo CSV exportado com sucesso para: " + fullPath);
         } catch (IOException e) {
