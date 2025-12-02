@@ -3,6 +3,7 @@ package Service;
 import DAO.PedidosAFaturarDAO;
 import Model.PedidosAFaturar;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -17,11 +18,11 @@ public class PedidosAFaturarService {
     private static final String CSV_HEADER = "Filial;Data Emissão;Data Entrada; Data Cancelamento; Num Nota; Cod. Parceiro;Razao Social;CPF/CNPJ;Ramo;Data Pedido;Num Pedido;Cod. Vendedor;Vendedor;Cod. Supervisor;Supervisor;Cod. Produto;Cod. Fabrica;Cod. Barras;Descricao;Vl. Custo;Preço Tabela;Vl. Desconto;Preco Venda;Qtde;Tot. Preco Tabela;Total Venda;CFOP;Departamento;Secao;Categoria;Operação;Posicao;Peso Liquido Unitario;";
 
     private static final LocalDateTime now = LocalDateTime.now();
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM.dd");
     private static final String timestamp = now.format(formatter);
 
-    private static final String directoryPath = "C:\\Users\\aplicacoes\\Downloads\\Auto-BI-Caboclo-main\\CSV\\";
-    private static final String baseFileName = "PedidosAFaturar_";
+    private static final String directoryPath = "C:\\Users\\aplicacoes\\Dropbox\\Vendas - Caboclo\\5_Pedidos_A_Faturar\\";
+    private static final String baseFileName = "Caboclo_Pedidos_a_Faturar - ";
     private static final String fileExtension = ".csv";
     private static final String fileName = baseFileName + timestamp + fileExtension;
     private static final String fullPath = directoryPath + fileName;
@@ -30,7 +31,7 @@ public class PedidosAFaturarService {
         return pedidosAFaturarDAO.listarPedidosAFaturar();
     }
 
-    public static void generateCSV(List<PedidosAFaturar> listaPedidosAFaturar) {
+    public static boolean generateCSV(List<PedidosAFaturar> listaPedidosAFaturar) {
         StringBuilder csvContent = new StringBuilder();
         csvContent.append(CSV_HEADER);
         csvContent.append("\n");
@@ -71,12 +72,23 @@ public class PedidosAFaturarService {
                     .append(p.getPesoLiquido()).append(";\n");
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("PedidosAFaturar.csv"))) {
+        File file = new File(fullPath);
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(csvContent.toString());
-            System.out.println(csvContent);
-            System.out.println("Arquivo CSV exportado com sucesso para: " + fullPath);
         } catch (IOException e) {
-            System.err.println("Erro ao exportar CSV: " + e.getMessage());
+            System.err.println("Falha ao escrever no arquivo CSV:");
+            e.printStackTrace();
+            return false;
+        }
+
+        // 4. Confirma se o arquivo realmente existe e tem tamanho > 0
+        if (file.exists() && file.length() > 0) {
+            System.out.println("✔ Arquivo criado com sucesso: " + file.getAbsolutePath());
+            return true;
+        } else {
+            System.err.println("❌ Erro: Arquivo não foi criado ou ficou vazio!");
+            return false;
         }
     }
 }

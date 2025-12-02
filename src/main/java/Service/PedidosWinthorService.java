@@ -3,6 +3,7 @@ package Service;
 import Model.PedidosWinthor;
 import DAO.PedidosWinthorDAO;
 
+import java.io.File;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,7 +11,6 @@ import java.util.List;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 
 public class PedidosWinthorService {
     private static PedidosWinthorDAO pedidosWinthorDAO = new PedidosWinthorDAO();
@@ -18,11 +18,13 @@ public class PedidosWinthorService {
     private static final String CSV_HEADER = "NUMPED;NUMPEDRCA;CODUSUR;NOME;CGCCLI;CODCLI;CLIENTE;DTFECHAMENTOPEDRCA;DTINCLUSAO;DTENTREGA;CODFILIAL;CODCOB;CODPLPAG;CONDVENDA;ORIGEMPED;OBS1;POSICAO_ATUAL;VLR_PEDIDO;";
 
     private static final LocalDateTime now = LocalDateTime.now();
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-    private static final String timestamp = now.format(formatter);
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM.dd");
+    private static final String currentDay = now.format(formatter);
+    private static final String firstDay = now.withDayOfMonth(1).format(formatter);
+    private static final String timestamp = firstDay + "_a_" + currentDay;
 
-    private static final String directoryPath = "C:\\Users\\aplicacoes\\Downloads\\Auto-BI-Caboclo-main\\CSV\\";
-    private static final String baseFileName = "PedidosWinthor_";
+    private static final String directoryPath = "C:\\Users\\aplicacoes\\Dropbox\\Vendas - Caboclo\\2_Pedidos_Whintor\\";
+    private static final String baseFileName = "1_caboclo_pedidos - ";
     private static final String fileExtension = ".csv";
     private static final String fileName = baseFileName + timestamp + fileExtension;
     private static final String fullPath = directoryPath + fileName;
@@ -31,7 +33,7 @@ public class PedidosWinthorService {
         return  pedidosWinthorDAO.listarPedidosWinthor();
     }
 
-    public static void generateCSV(List<PedidosWinthor> listaPedidosWinthor) {
+    public static boolean generateCSV(List<PedidosWinthor> listaPedidosWinthor) {
         StringBuilder csvContent = new StringBuilder();
         csvContent.append(CSV_HEADER);
         csvContent.append("\n");
@@ -57,12 +59,23 @@ public class PedidosWinthorService {
                     .append(p.getVlrPedido()).append(";\n");
         }
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("PedidosWinthor.csv"))) {
+        File file = new File(fullPath);
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
             writer.write(csvContent.toString());
-            System.out.println(csvContent);
-            System.out.println("Arquivo CSV exportado com sucesso para: " + fullPath);
         } catch (IOException e) {
-            System.err.println("Erro ao exportar CSV: " + e.getMessage());
+            System.err.println("Falha ao escrever no arquivo CSV:");
+            e.printStackTrace();
+            return false;
+        }
+
+        // 4. Confirma se o arquivo realmente existe e tem tamanho > 0
+        if (file.exists() && file.length() > 0) {
+            System.out.println("✔ Arquivo criado com sucesso: " + file.getAbsolutePath());
+            return true;
+        } else {
+            System.err.println("❌ Erro: Arquivo não foi criado ou ficou vazio!");
+            return false;
         }
     }
 }
