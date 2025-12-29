@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class JustificativasDAO {
                         rs.getString("NOME_VENDEDOR"),
                         rs.getInt("COD_CLIENTE"),
                         rs.getString("NOME_CLIENTE"),
-                        rs.getDate("DATA"),
+                        rs.getTimestamp("DATA").toLocalDateTime().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss")),
                         rs.getString("JUSTIFICATIVA"),
                         rs.getString("TIPO")
                 );

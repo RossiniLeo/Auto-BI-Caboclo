@@ -1,17 +1,17 @@
 package Model;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Justificativas {
     private int CodUsur;
     private String Vendedor;
     private int CodCli;
     private String Cliente;
-    private Date Data;
+    private String Data;
     private String Justificativa;
     private String Tipo;
 
-    public Justificativas(int codUsur, String vendedor, int codCli, String cliente, Date data, String justificativa, String tipo) {
+    public Justificativas(int codUsur, String vendedor, int codCli, String cliente, String data, String justificativa, String tipo) {
         CodUsur = codUsur;
         Vendedor = vendedor;
         CodCli = codCli;
@@ -53,11 +53,11 @@ public class Justificativas {
         Cliente = cliente;
     }
 
-    public Date getData() {
+    public String getData() {
         return Data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         Data = data;
     }
 

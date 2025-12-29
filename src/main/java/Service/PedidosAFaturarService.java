@@ -4,6 +4,10 @@ import DAO.PedidosAFaturarDAO;
 import Model.PedidosAFaturar;
 
 import java.io.File;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,7 +22,7 @@ public class PedidosAFaturarService {
     private static final String CSV_HEADER = "Filial;Data Emissão;Data Entrada; Data Cancelamento; Num Nota; Cod. Parceiro;Razao Social;CPF/CNPJ;Ramo;Data Pedido;Num Pedido;Cod. Vendedor;Vendedor;Cod. Supervisor;Supervisor;Cod. Produto;Cod. Fabrica;Cod. Barras;Descricao;Vl. Custo;Preço Tabela;Vl. Desconto;Preco Venda;Qtde;Tot. Preco Tabela;Total Venda;CFOP;Departamento;Secao;Categoria;Operação;Posicao;Peso Liquido Unitario;";
 
     private static final LocalDateTime now = LocalDateTime.now();
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM.dd");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM");
     private static final String timestamp = now.format(formatter);
 
     private static final String directoryPath = "C:\\Users\\aplicacoes\\Dropbox\\Vendas - Caboclo\\5_Pedidos_A_Faturar\\";
@@ -70,6 +74,20 @@ public class PedidosAFaturarService {
                     .append(p.getOperacao()).append(";")
                     .append(p.getPosicao() != null ? p.getPosicao() : "").append(";")
                     .append(p.getPesoLiquido()).append(";\n");
+        }
+
+        Path dir = Paths.get(directoryPath);
+
+        if (Files.exists(dir) && Files.isDirectory(dir)) {
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+                for (Path arquivo : stream) {
+                    if (Files.isRegularFile(arquivo)) {
+                        Files.deleteIfExists(arquivo);
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         File file = new File(fullPath);

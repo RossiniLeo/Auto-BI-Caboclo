@@ -3,6 +3,10 @@ package Service;
 import DAO.AgendaVendedorDAO;
 import Model.AgendaVendedor;
 
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,10 +22,8 @@ public class AgendaVendedorService {
     private static final String CSV_HEADER = "CODCLI;CLIENTE;CGCENT;CODREDE;REDE;CODPRACA;CODATV1;RAMO;ENDERENT;NUMEROENT;CEPENT;BAIRROENT;MUNICENT;ESTENT;TELENT;BLOQUEIO;FORGA_PG;CODPLPAG;DTBLOQ;DTULTCOMP;CODRCA;VENDEDOR1;CODSUPER1;VEND_VISITA;VEND_DIASEMANA;VEND_PERIO;VEND_SEQUENCIA;";
 
     private static final LocalDateTime now = LocalDateTime.now();
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM.dd");
-    private static final String currentDay = now.format(formatter);
-    private static final String firstDay = now.withDayOfMonth(1).format(formatter);
-    private static final String timestamp = firstDay + "_a_" + currentDay;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM");
+    private static final String timestamp = now.format(formatter);
 
     private static final String directoryPath = "C:\\Users\\aplicacoes\\Dropbox\\Vendas - Caboclo\\1_Agenda_Vendedor\\";
     private static final String baseFileName = "1_caboclo_agenda_vendedor - ";
@@ -66,6 +68,20 @@ public class AgendaVendedorService {
                     .append(av.getDiaSemanaVisita()).append(";")
                     .append(av.getPeriodicidadeVisita()).append(";")
                     .append(av.getSequenciaVisita()).append(";\n");
+        }
+
+        Path dir = Paths.get(directoryPath);
+
+        if (Files.exists(dir) && Files.isDirectory(dir)) {
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+                for (Path arquivo : stream) {
+                    if (Files.isRegularFile(arquivo)) {
+                        Files.deleteIfExists(arquivo);
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         File file = new File(fullPath);

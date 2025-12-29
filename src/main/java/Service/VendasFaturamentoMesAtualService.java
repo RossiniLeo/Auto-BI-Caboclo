@@ -4,6 +4,10 @@ import DAO.VendasFaturamentoMesAtualDAO;
 import Model.VendasFaturamentoMesAtual;
 
 import java.io.File;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,10 +22,8 @@ public class VendasFaturamentoMesAtualService {
     private static final String CSV_HEADER = "DRMOV;NUMNOTA;CODOPER;STATUS;CODCLI;CLIENTE;CGCENT;CODUSUR;NOME;CODSUPERVISOR;CODPROD;DESCRICAO;CODFORNEC;CODFISCAL;QT;PUNIT;VENDATOT;CUSTOREAL;CUSTOTOT;DEPTO;";
 
     private static final LocalDateTime now = LocalDateTime.now();
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM.dd");
-    private static final String currentDay = now.format(formatter);
-    private static final String firstDay = now.withDayOfMonth(1).format(formatter);
-    private static final String timestamp = firstDay + "_a_" + currentDay;
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yy.MM");
+    private static final String timestamp = now.format(formatter);
 
     private static final String directoryPath = "C:\\Users\\aplicacoes\\Dropbox\\Vendas - Caboclo\\4_Vendas_Faturamento_Mês_Atual\\";
     private static final String baseFileName = now.format(DateTimeFormatter.ofPattern("yyyy_MM")) + " - Caboclo_Vendas - ";
@@ -59,6 +61,20 @@ public class VendasFaturamentoMesAtualService {
                     .append(vf.getCustoReal()).append(";")
                     .append(vf.getCustoTot()).append(";")
                     .append(vf.getDepto()).append(";\n");
+        }
+
+        Path dir = Paths.get(directoryPath);
+
+        if (Files.exists(dir) && Files.isDirectory(dir)) {
+            try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
+                for (Path arquivo : stream) {
+                    if (Files.isRegularFile(arquivo)) {
+                        Files.deleteIfExists(arquivo);
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         File file = new File(fullPath);
