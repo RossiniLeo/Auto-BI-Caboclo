@@ -2,6 +2,8 @@ package DAO;
 
 import Model.AgendaVendedor;
 import java.sql.*;
+import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,13 +21,20 @@ public class AgendaVendedorDAO {
                 "R.DTPROXVISITA AS VEND_DTVISITA, R.DIASEMANA AS VEND_DIASEMANA, " +
                 "R.PERIODICIDADE AS VEND_PERIO, R.SEQUENCIA AS VEND_SEQUENCIA " +
                 "FROM PCCLIENT C " +
-                "INNER JOIN PCROTACLI R ON (C.CODCLI = R.CODCLI) " +
+                "INNER JOIN PCMOVROTACLI R ON (C.CODCLI = R.CODCLI) " +
                 "LEFT JOIN PCUSUARI U ON (R.CODUSUR = U.CODUSUR) " +
                 "INNER JOIN PCATIVI A ON (C.CODATV1 = A.CODATIV) " +
-                "LEFT JOIN PCREDECLIENTE RD ON (C.CODREDE = RD.CODREDE)";
+                "LEFT JOIN PCREDECLIENTE RD ON (C.CODREDE = RD.CODREDE)" +
+                "WHERE R.DTPROXVISITA BETWEEN :dtini AND :dtfin";
+        
+        sql = sql.replace(":dtini", "?").replace(":dtfin", "?");
 
         try (Connection conn = ConnectionFactory.obtemConexao();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
+        	
+        	stmt.setDate(1, Date.valueOf(LocalDate.now().withDayOfMonth(1)));
+            stmt.setDate(2, Date.valueOf(LocalDate.now().with(TemporalAdjusters.lastDayOfMonth())));
+            
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -49,11 +58,11 @@ public class AgendaVendedorDAO {
                         rs.getString("FORMA_PG"),
                         rs.getInt("CODPLPAG"),
                         rs.getDate("DTBLOQ"),
-                        rs.getDate("DTULTCOMP"),
+                        rs.getDate("DTULTCOMP") != null ? rs.getDate("DTULTCOMP") : new Date(0001, 01, 01),
                         rs.getInt("CODRCA"),
                         rs.getString("VENDEDOR1"),
                         rs.getInt("CODSUPER1"),
-                        rs.getString("VEND_DTVISITA"),
+                        rs.getDate("VEND_DTVISITA").toString(),
                         rs.getString("VEND_DIASEMANA"),
                         rs.getInt("VEND_PERIO"),
                         rs.getInt("VEND_SEQUENCIA")
